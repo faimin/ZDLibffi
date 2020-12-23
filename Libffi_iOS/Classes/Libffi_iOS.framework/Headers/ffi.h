@@ -43,5 +43,5 @@
 
 
 // libffi v3.3
-// architectures: arm64 armv7
-// Zero.D.Saber
+// architectures: x86_64 i386 armv7 arm64
+// made by faimin(Zero.D.Saber)

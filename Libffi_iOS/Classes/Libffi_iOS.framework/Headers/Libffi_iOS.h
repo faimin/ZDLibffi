@@ -24,4 +24,6 @@ FOUNDATION_EXPORT const unsigned char Libffi_iOSVersionString[];
 #endif
 
 
-
+// libffi v3.3
+// architectures: x86_64 i386 armv7 arm64
+// made by faimin(Zero.D.Saber)

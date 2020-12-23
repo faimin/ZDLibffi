@@ -7,7 +7,9 @@
 
 ## Introduction：
 
-[libffi v3.3](https://github.com/libffi/libffi/releases/tag/v3.3) framework that support module
+[libffi v3.3](https://github.com/libffi/libffi/releases/tag/v3.3) framework that support `module`
+
+> support architectures: `x86_64` `i386` `armv7` `arm64`
 
 ## Env：
 
