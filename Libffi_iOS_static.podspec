@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
   s.header_dir = 'Libffi_iOS_static/include/ffi'
   s.public_header_files = 'Libffi_iOS_static/include/ffi/*.h'
   s.source_files = 'Libffi_iOS_static/**/*.h'
-  s.vendored_libraries = 'Libffi_iOS_static/Classes/*.a'
+  s.vendored_libraries = 'Libffi_iOS_static/*.a'
   s.module_name = s.name
   
 end
