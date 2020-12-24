@@ -29,9 +29,9 @@ Pod::Spec.new do |s|
   }
 
   s.module_name = s.name
-  s.header_dir = 'Libffi_iOS_Library/include/ffi'
-  s.public_header_files = 'Libffi_iOS_Library/include/ffi/*.h'
   s.source_files = 'Libffi_iOS_Library/**/*.h'
   s.vendored_libraries = 'Libffi_iOS_Library/*.a'
-  
+  s.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES'
+  }
 end
