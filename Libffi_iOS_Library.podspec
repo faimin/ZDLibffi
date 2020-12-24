@@ -7,9 +7,9 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'Libffi_iOS_static'
+  s.name             = 'Libffi_iOS_Library'
   s.version          = '0.0.1'
-  s.summary          = 'Libffi_iOS_static library'
+  s.summary          = 'Libffi_iOS static library'
   s.description      = <<-DESC
   libffi v3.3 static library for iOS.
                        DESC
@@ -28,10 +28,10 @@ Pod::Spec.new do |s|
     :tag => s.version.to_s
   }
 
-  s.header_dir = 'Libffi_iOS_static/include/ffi'
-  s.public_header_files = 'Libffi_iOS_static/include/ffi/*.h'
-  s.source_files = 'Libffi_iOS_static/**/*.h'
-  s.vendored_libraries = 'Libffi_iOS_static/*.a'
   s.module_name = s.name
+  s.header_dir = 'Libffi_iOS_Library/include/ffi'
+  s.public_header_files = 'Libffi_iOS_Library/include/ffi/*.h'
+  s.source_files = 'Libffi_iOS_Library/**/*.h'
+  s.vendored_libraries = 'Libffi_iOS_Library/*.a'
   
 end
