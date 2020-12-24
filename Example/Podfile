@@ -3,7 +3,7 @@
 platform :ios, '9.0'
 
 target 'Libffi_iOS_Example' do
-  pod 'Libffi_iOS', :path => '../'
+  pod 'Libffi_iOS_Framework', :path => '../'
 
   target 'Libffi_iOS_Tests' do
     inherit! :search_paths

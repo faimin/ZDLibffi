@@ -7,11 +7,11 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'Libffi_iOS'
+  s.name             = 'Libffi_iOS_Framework'
   s.version          = '0.0.1'
-  s.summary          = 'Libffi_iOS framework'
+  s.summary          = 'Libffi framework for iOS (i386, x86_64, armv7, arm64)'
   s.description      = <<-DESC
-  libffi v3.3 framework support module for iOS.
+  libffi v3.3 framework for iOS (i386, x86_64, armv7, arm64) which support module.
                        DESC
   s.homepage         = 'https://github.com/faimin/Libffi_iOS'
   s.license          = {
@@ -27,6 +27,6 @@ Pod::Spec.new do |s|
     :git => 'https://github.com/faimin/Libffi_iOS.git',
     :tag => s.version.to_s
   }
-  s.vendored_frameworks = 'Libffi_iOS/Classes/Libffi_iOS.framework'
+  s.vendored_frameworks = 'Libffi_iOS_Framework/Classes/Libffi_iOS.framework'
   
 end
