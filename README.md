@@ -33,7 +33,7 @@ Libffi_iOS is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Libffi_iOS'
+pod 'Libffi_iOS_Framework'
 ```
 
 ## Author
