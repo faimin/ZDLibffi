@@ -7,23 +7,22 @@
 
 ## Introduction：
 
-[libffi v3.3](https://github.com/libffi/libffi/releases/tag/v3.3) framework that support `module`
-
-> support architectures: `x86_64` `i386` `armv7` `arm64`
+[libffi v3.4.2](https://github.com/libffi/libffi/releases/tag/v3.4.2) source code that support `module`
 
 ## Env：
 
-> [libffi v3.3](https://github.com/libffi/libffi/releases/tag/v3.3) 
+> [libffi v3.4.2](https://github.com/libffi/libffi/releases/tag/v3.4.2) 
 >
-> Xcode 12.3 (12C33)
+> Xcode 12.5 
 >
-> MacOS 10.15.7 (19H114)
+> MacOS 11.4
 
 ## Compile source code：
 
-1. `python generate-darwin-source-and-headers.py --only-ios`
-2. open `libffi.xcodeproj`
-3. select scheme `libffi-iOS` and device `Generic iOS Device`
+1.  `sh autogen.sh`
+2. `python generate-darwin-source-and-headers.py --only-ios`
+3. open `libffi.xcodeproj`
+4. select scheme `libffi-iOS` and device `Generic iOS Device`
 4. click `Product - Build`
 If success, you would see a `Product/libffi.a` in the side bar, you can right click it to get the lib in the finder.
 
@@ -33,7 +32,7 @@ Libffi_iOS is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Libffi_iOS_Framework'
+pod 'ZDLibffi'
 ```
 
 ## Author

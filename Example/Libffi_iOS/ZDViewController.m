@@ -7,7 +7,7 @@
 //
 
 #import "ZDViewController.h"
-@import Libffi_iOS;
+@import ZDLibffi;
 
 @interface ZDViewController ()
 

@@ -1,16 +1,16 @@
 PODS:
-  - Libffi_iOS_Framework (0.0.1)
+  - ZDLibffi (0.0.1)
 
 DEPENDENCIES:
-  - Libffi_iOS_Framework (from `../`)
+  - ZDLibffi (from `../`)
 
 EXTERNAL SOURCES:
-  Libffi_iOS_Framework:
+  ZDLibffi:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Libffi_iOS_Framework: 3cc4a54bbc563b751d13ca50c353698bd0ccb91d
+  ZDLibffi: 779fa18f1e61b9bf4aa30b435c782f3893b5ba78
 
-PODFILE CHECKSUM: 503d97625335f9fb7ba4cc07fecbc91def6bec41
+PODFILE CHECKSUM: 2f645aa547426b7f5e941cf073010b6df5917a84
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
