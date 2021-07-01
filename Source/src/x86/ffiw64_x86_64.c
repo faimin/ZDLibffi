@@ -28,11 +28,26 @@
    ----------------------------------------------------------------------- */
 
 #if defined(__x86_64__) || defined(_M_AMD64)
+#if __has_include(<ffi.h>)
 #include <ffi.h>
+#else
+#include "ffi.h"
+#endif
+
+#if __has_include(<ffi_common.h>)
 #include <ffi_common.h>
+#else
+#include "ffi_common.h"
+#endif
+
+#if __has_include(<tramp.h>)
+#include <tramp.h>
+#else
+#include "tramp.h"
+#endif
+
 #include <stdlib.h>
 #include <stdint.h>
-#include <tramp.h>
 
 #ifdef X86_WIN64
 #define EFI64(name) name

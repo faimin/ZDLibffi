@@ -25,7 +25,11 @@
    DEALINGS IN THE SOFTWARE.
    ----------------------------------------------------------------------- */
 
+#if __has_include(<fficonfig.h>)
 #include <fficonfig.h>
+#else
+#include "fficonfig.h"
+#endif
 
 #ifdef FFI_EXEC_STATIC_TRAMP
 
@@ -45,7 +49,11 @@
 #include <fcntl.h>
 #include <pthread.h>
 #include <sys/mman.h>
+#if __has_include(<tramp.h>)
 #include <tramp.h>
+#else
+#include "tramp.h"
+#endif
 #ifdef __linux__
 #include <linux/limits.h>
 #include <linux/types.h>

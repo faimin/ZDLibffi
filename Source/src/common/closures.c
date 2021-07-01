@@ -31,10 +31,29 @@
 #define _GNU_SOURCE 1
 #endif
 
+#if __has_include(<fficonfig.h>)
 #include <fficonfig.h>
+#else
+#include "fficonfig.h"
+#endif
+
+#if __has_include(<ffi.h>)
 #include <ffi.h>
+#else
+#include "ffi.h"
+#endif
+
+#if __has_include(<ffi_common.h>)
 #include <ffi_common.h>
+#else
+#include "ffi_common.h"
+#endif
+
+#if __has_include(<tramp.h>)
 #include <tramp.h>
+#else
+#include "tramp.h"
+#endif
 
 #ifdef __NetBSD__
 #include <sys/param.h>

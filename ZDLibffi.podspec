@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZDLibffi'
-  s.version          = '0.0.1'
-  s.summary          = 'Libffi framework for iOS (i386, x86_64, armv7, arm64)'
+  s.version          = '0.0.2'
+  s.summary          = 'Libffi source code for iOS'
   s.description      = <<-DESC
   libffi v3.4.2 for iOS (i386, x86_64, armv7, arm64) which support module.
                        DESC

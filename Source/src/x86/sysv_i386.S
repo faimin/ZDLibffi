@@ -32,8 +32,18 @@
 #ifndef _MSC_VER
 
 #define LIBFFI_ASM	
+#if __has_include(<fficonfig.h>)
 #include <fficonfig.h>
+#else
+#include "fficonfig.h"
+#endif
+
+#if __has_include(<ffi.h>)
 #include <ffi.h>
+#else
+#include "ffi.h"
+#endif
+
 #include "internal.h"
 
 #define C2(X, Y)  X ## Y

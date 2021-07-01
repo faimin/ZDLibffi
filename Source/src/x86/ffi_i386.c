@@ -32,11 +32,25 @@
    ----------------------------------------------------------------------- */
 
 #if defined(__i386__) || defined(_M_IX86)
+#if __has_include(<ffi.h>)
 #include <ffi.h>
+#else
+#include "ffi.h"
+#endif
+
+#if __has_include(<ffi_common.h>)
 #include <ffi_common.h>
+#else
+#include "ffi_common.h"
+#endif
+
 #include <stdint.h>
 #include <stdlib.h>
+#if __has_include(<tramp.h>)
 #include <tramp.h>
+#else
+#include "tramp.h"
+#endif
 #include "internal.h"
 
 /* Force FFI_TYPE_LONGDOUBLE to be different than FFI_TYPE_DOUBLE;

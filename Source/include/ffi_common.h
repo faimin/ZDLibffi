@@ -35,7 +35,11 @@
 extern "C" {
 #endif
 
+#if __has_include(<fficonfig.h>)
 #include <fficonfig.h>
+#else
+#include "fficonfig.h"
+#endif
 
 /* Do not move this. Some versions of AIX are very picky about where
    this is positioned. */

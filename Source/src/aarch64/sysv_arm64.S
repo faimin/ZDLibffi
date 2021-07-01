@@ -23,9 +23,25 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 
 #if defined(__aarch64__) || defined(__arm64__)
 #define LIBFFI_ASM
+
+#if __has_include(<fficonfig.h>)
 #include <fficonfig.h>
+#else
+#include "fficonfig.h"
+#endif
+
+#if __has_include(<ffi.h>)
 #include <ffi.h>
+#else
+#include "ffi.h"
+#endif
+
+#if __has_include(<ffi_cfi.h>)
 #include <ffi_cfi.h>
+#else
+#include "ffi_cfi.h"
+#endif
+
 #include "internal.h"
 
 #ifdef HAVE_MACHINE_ASM_H

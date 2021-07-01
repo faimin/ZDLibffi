@@ -25,14 +25,34 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+
+#if __has_include(<fficonfig.h>)
 #include <fficonfig.h>
+#else
+#include "fficonfig.h"
+#endif
+
+#if __has_include(<ffi.h>)
 #include <ffi.h>
+#else
+#include "ffi.h"
+#endif
+
+#if __has_include(<ffi_common.h>)
 #include <ffi_common.h>
+#else
+#include "ffi_common.h"
+#endif
+
 #include "internal.h"
 #ifdef _WIN32
 #include <windows.h> /* FlushInstructionCache */
 #endif
+#if __has_include(<tramp.h>)
 #include <tramp.h>
+#else
+#include "tramp.h"
+#endif
 
 /* Force FFI_TYPE_LONGDOUBLE to be different than FFI_TYPE_DOUBLE;
    all further uses in this file will refer to the 128-bit type.  */

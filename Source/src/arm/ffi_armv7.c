@@ -31,12 +31,31 @@
    ----------------------------------------------------------------------- */
 
 #if defined(__arm__) || defined(_M_ARM)
+#if __has_include(<fficonfig.h>)
 #include <fficonfig.h>
+#else
+#include "fficonfig.h"
+#endif
+
+#if __has_include(<ffi.h>)
 #include <ffi.h>
+#else
+#include "ffi.h"
+#endif
+
+#if __has_include(<ffi_common.h>)
 #include <ffi_common.h>
+#else
+#include "ffi_common.h"
+#endif
+
 #include <stdint.h>
 #include <stdlib.h>
+#if __has_include(<tramp.h>)
 #include <tramp.h>
+#else
+#include "tramp.h"
+#endif
 #include "internal.h"
 
 #if defined(_WIN32)

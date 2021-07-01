@@ -58,7 +58,11 @@ extern "C" {
 
 /* ---- System configuration information --------------------------------- */
 
+#if __has_include(<ffitarget.h>)
 #include <ffitarget.h>
+#else
+#include "ffitarget.h"
+#endif
 
 #ifndef LIBFFI_ASM
 

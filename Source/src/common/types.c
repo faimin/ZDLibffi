@@ -28,8 +28,17 @@
    can redefine them here as "const".  */
 #define LIBFFI_HIDE_BASIC_TYPES
 
+#if __has_include(<ffi.h>)
 #include <ffi.h>
+#else
+#include "ffi.h"
+#endif
+
+#if __has_include(<ffi_common.h>)
 #include <ffi_common.h>
+#else
+#include "ffi_common.h"
+#endif
 
 /* Type definitions */
 
