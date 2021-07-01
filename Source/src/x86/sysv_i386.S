@@ -44,7 +44,7 @@
 #include "ffi.h"
 #endif
 
-#include "internal.h"
+#include "internal_i386.h"
 
 #define C2(X, Y)  X ## Y
 #define C1(X, Y)  C2(X, Y)

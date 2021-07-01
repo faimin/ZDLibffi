@@ -51,7 +51,7 @@
 #else
 #include "tramp.h"
 #endif
-#include "internal.h"
+#include "internal_i386.h"
 
 /* Force FFI_TYPE_LONGDOUBLE to be different than FFI_TYPE_DOUBLE;
    all further uses in this file will refer to the 80-bit type.  */

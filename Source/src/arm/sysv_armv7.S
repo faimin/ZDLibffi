@@ -47,7 +47,7 @@
 #include "ffi_cfi.h"
 #endif
 
-#include "internal.h"
+#include "internal_arm.h"
 
 /* GCC 4.8 provides __ARM_ARCH; construct it otherwise.  */
 #ifndef __ARM_ARCH

@@ -42,7 +42,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 #include "ffi_cfi.h"
 #endif
 
-#include "internal.h"
+#include "internal_arm64.h"
 
 #ifdef HAVE_MACHINE_ASM_H
 #include <machine/asm.h>

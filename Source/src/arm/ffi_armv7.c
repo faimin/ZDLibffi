@@ -56,7 +56,7 @@
 #else
 #include "tramp.h"
 #endif
-#include "internal.h"
+#include "internal_arm.h"
 
 #if defined(_WIN32)
 #define WIN32_LEAN_AND_MEAN

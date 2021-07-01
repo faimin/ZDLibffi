@@ -44,7 +44,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 #include "ffi_common.h"
 #endif
 
-#include "internal.h"
+#include "internal_arm64.h"
 #ifdef _WIN32
 #include <windows.h> /* FlushInstructionCache */
 #endif
