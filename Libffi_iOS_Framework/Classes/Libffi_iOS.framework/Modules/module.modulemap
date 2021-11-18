@@ -1,6 +1,0 @@
-framework module Libffi_iOS {
-  umbrella header "Libffi_iOS.h"
-
-  export *
-  module * { export * }
-}
