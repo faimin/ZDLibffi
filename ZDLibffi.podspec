@@ -32,7 +32,8 @@ Pod::Spec.new do |s|
   
   s.module_name = 'ZDLibffi'
   s.pod_target_xcconfig = {
-    'DEFINES_MODULE' => 'YES'
+    'DEFINES_MODULE' => 'YES',
+    'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) USE_DL_PREFIX=1',
   }
   
   s.source_files = "Source/**/*.{h,c,S}"
