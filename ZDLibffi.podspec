@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
     'faimin' => 'fuxianchao@gmail.com'
   }
   s.source           = {
-    :git => 'https://github.com/faimin/ZDLibffi_iOS.git',
+    :git => 'https://github.com/faimin/ZDLibffi.git',
     :tag => s.version.to_s
   }
   s.prefix_header_file = false
