@@ -21,7 +21,8 @@
 /* Cannot use PROT_EXEC on this target, so, we revert to alternative means */
 #define FFI_EXEC_TRAMPOLINE_TABLE 1
 
-/* Define this if you want to enable pax emulated trampolines */
+/* Define this if you want to enable pax emulated trampolines (experimental)
+   */
 /* #undef FFI_MMAP_EXEC_EMUTRAMP_PAX */
 
 /* Cannot use malloc on this target, so, we revert to alternative means */
@@ -149,7 +150,7 @@
 #define PACKAGE_NAME "libffi"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "libffi 3.4.2"
+#define PACKAGE_STRING "libffi 3.4.4-experimental"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "libffi"
@@ -158,7 +159,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "3.4.2"
+#define PACKAGE_VERSION "3.4.4-experimental"
 
 /* The size of `double', as computed by sizeof. */
 #define SIZEOF_DOUBLE 8
@@ -190,7 +191,7 @@
 /* #undef USING_PURIFY */
 
 /* Version number of package */
-#define VERSION "3.4.2"
+#define VERSION "3.4.4-experimental"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */

@@ -48,7 +48,6 @@
 #else
 #include "ffi_common.h"
 #endif
-
 #include <stdint.h>
 #include <stdlib.h>
 #if __has_include(<tramp.h>)

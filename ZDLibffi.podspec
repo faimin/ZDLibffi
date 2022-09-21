@@ -8,10 +8,10 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZDLibffi'
-  s.version          = '0.0.3'
+  s.version          = '0.343.0'
   s.summary          = 'Libffi source code integrate'
   s.description      = <<-DESC
-    libffi v3.4.2 integrate to iOS && macOS.
+    libffi v3.4.3 integrate to iOS && macOS.
                        DESC
   s.homepage         = 'https://github.com/libffi/libffi'
   s.license          = "MIT"
@@ -25,15 +25,15 @@ Pod::Spec.new do |s|
   }
   s.prefix_header_file = false
   
-  s.ios.deployment_target = '9.0'
-  s.osx.deployment_target = '10.12'
-  #s.watchos.deployment_target = '3.0'
-  #s.tvos.deployment_target = '9.0'
+  s.ios.deployment_target = '7.0'
+  s.osx.deployment_target = '11.0'
+#  s.watchos.deployment_target = '4.0'
+#  s.tvos.deployment_target = '9.0'
   
   s.module_name = 'ZDLibffi'
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
-    'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) USE_DL_PREFIX=1',
+    #'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) USE_DL_PREFIX=1',
   }
   
   s.source_files = "Source/**/*.{h,c,S}"
