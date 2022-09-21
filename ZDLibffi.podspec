@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.version          = '0.343.0'
   s.summary          = 'Libffi source code integrate'
   s.description      = <<-DESC
-    libffi v3.4.3 integrate to iOS && macOS.
+    libffi v3.4.3 integrate to iOS && macOS && watchos && tvos.
                        DESC
   s.homepage         = 'https://github.com/libffi/libffi'
   s.license          = "MIT"
