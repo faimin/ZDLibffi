@@ -4,7 +4,7 @@ install!'cocoapods',
 :deterministic_uuids => false,
 :warn_for_unused_master_specs_repo => false
 
-platform :ios, '9.0'
+platform :ios, '10.0'
 
 target 'Libffi_iOS_Example' do
   pod 'ZDLibffi', :path => '../'
