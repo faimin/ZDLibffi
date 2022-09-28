@@ -1,0 +1,69 @@
+# https://docs.travis-ci.com/user/languages/objective-c/
+# https://www.objc.io/issues/6-build-tools/travis-ci/
+# https://github.com/Hearst-DD/ObjectMapper/blob/master/.travis.yml
+
+language: objective-c
+os: osx
+cache: cocoapods
+osx_image: xcode13.4
+
+xcode_workspace: Example/Libffi_iOS.xcworkspace 
+xcode_scheme: Libffi_iOS-Example
+xcode_destination: platform=iOS Simulator,OS=15.5,name=iPhone X
+podfile: Example/Podfile
+
+env:
+ global:
+    - LANG=en_US.UTF-8
+    - LC_ALL=en_US.UTF-8
+    - XCODE_WORKSPACE="Example/Libffi_iOS.xcworkspace"
+    - IOS_SCHEME="Libffi_iOS-Example"
+    - IOS_SDK=iphonesimulator15.5
+    - IOS_VERSON=15.5
+ matrix:
+    - DESTINATION="OS=$IOS_VERSON,name=iPhone X"            SCHEME="$IOS_SCHEME"     SDK="$IOS_SDK"     RUN_TESTS="NO"
+ 
+branches:
+  only:
+    - main
+
+before_install:
+  - env
+  # - gem update bundler
+  - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+  - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
+  # - pod repo update --silent
+  # - pod install --project-directory=Demo
+
+before_script:
+  # - bundle install --gemfile=Demo/Gemfile
+  - pod update
+
+script:
+  - set -o pipefail
+  - xcodebuild -version
+  - xcodebuild -showsdks
+  - xcodebuild clean -workspace "$XCODE_WORKSPACE" -scheme "$SCHEME" -configuration Debug -sdk "$SDK" | xcpretty -c
+
+  # Build Framework in Debug and Run Tests if specified
+  - if [ $RUN_TESTS == "YES" ]; then
+      travis_retry xcodebuild -workspace "$XCODE_WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c;
+    else
+      travis_retry xcodebuild -workspace "$XCODE_WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty -c;
+    fi
+
+script:
+  - pod lib lint ZDLibffi.podspec --allow-warnings
+env:
+  - JOB=PODSPEC  
+
+notifications:
+  email: # false
+    recipients:
+      - fuxianchao2009@163.com
+    on_success: change
+    on_failure: always  
+
+after_success:
+  # - bash <(curl -s https://codecov.io/bash)
+  - sleep 5
