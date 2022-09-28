@@ -4,6 +4,7 @@
 [![Version](https://img.shields.io/cocoapods/v/ZDLibffi.svg?style=flat)](https://cocoapods.org/pods/ZDLibffi)
 [![License](https://img.shields.io/cocoapods/l/ZDLibffi.svg?style=flat)](https://cocoapods.org/pods/ZDLibffi)
 [![Platform](https://img.shields.io/cocoapods/p/ZDLibffi.svg?style=flat)](https://cocoapods.org/pods/ZDLibffi)
+[![pod lib lint](https://github.com/faimin/ZDLibffi/actions/workflows/podliblint.yml/badge.svg)](https://github.com/faimin/ZDLibffi/actions/workflows/podliblint.yml)
 
 ## Introduction：
 
