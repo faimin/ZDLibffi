@@ -8,11 +8,11 @@
 
 ## Introduction：
 
-[libffi v3.4.3](https://github.com/libffi/libffi/releases/tag/v3.4.3) source code that support `module`
+[libffi v3.4.4](https://github.com/libffi/libffi/releases/tag/v3.4.4) source code that support `module`
 
 ## Env：
 
-> [libffi v3.4.3](https://github.com/libffi/libffi/releases/tag/v3.4.3) 
+> [libffi v3.4.4](https://github.com/libffi/libffi/releases/tag/v3.4.4) 
 >
 > Xcode 13.4.1 
 >
@@ -46,4 +46,4 @@ faimin, fuxianchao@gmail.com
 
 ## License
 
-Libffi_iOS is available under the MIT license. See the LICENSE file for more info.
+ZDLibffi is available under the MIT license. See the LICENSE file for more info.
