@@ -24,18 +24,8 @@
    DEALINGS IN THE SOFTWARE.
    ----------------------------------------------------------------------- */
 
-#if __has_include(<ffi.h>)
 #include <ffi.h>
-#else
-#include "ffi.h"
-#endif
-
-#if __has_include(<ffi_common.h>)
 #include <ffi_common.h>
-#else
-#include "ffi_common.h"
-#endif
-
 #include <stdlib.h>
 
 /* Round up to FFI_SIZEOF_ARG. */
@@ -244,7 +234,7 @@ ffi_status ffi_prep_cif_var(ffi_cif *cif,
 {
   ffi_status rc;
   size_t int_size = ffi_type_sint.size;
-  int i;
+  unsigned int i;
 
   rc = ffi_prep_cif_core(cif, abi, 1, nfixedargs, ntotalargs, rtype, atypes);
 

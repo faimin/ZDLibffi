@@ -45,9 +45,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 #endif
 
 #include "internal_arm64.h"
+
 #ifdef _WIN32
 #include <windows.h> /* FlushInstructionCache */
 #endif
+
 #if __has_include(<tramp.h>)
 #include <tramp.h>
 #else

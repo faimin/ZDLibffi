@@ -6,9 +6,6 @@
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
 
-/* Define to 1 if using 'alloca.c'. */
-/* #undef C_ALLOCA */
-
 /* Define to the flags needed for the .section .eh_frame directive. */
 #define EH_FRAME_FLAGS "a"
 
@@ -34,10 +31,7 @@
 /* Define this if you do not want support for aggregate types. */
 /* #undef FFI_NO_STRUCTS */
 
-/* Define to 1 if you have 'alloca', as a function or macro. */
-#define HAVE_ALLOCA 1
-
-/* Define to 1 if <alloca.h> works. */
+/* Define to 1 if you have the <alloca.h> header file. */
 #define HAVE_ALLOCA_H 1
 
 /* Define if your assembler supports .cfi_* directives. */
@@ -74,29 +68,11 @@
 /* Define if you support more than one size of the long double type */
 /* #undef HAVE_LONG_DOUBLE_VARIANT */
 
-/* Define to 1 if you have the `memcpy' function. */
+/* Define to 1 if you have the 'memcpy' function. */
 #define HAVE_MEMCPY 1
 
-/* Define to 1 if you have the `memfd_create' function. */
+/* Define to 1 if you have the 'memfd_create' function. */
 /* #undef HAVE_MEMFD_CREATE */
-
-/* Define to 1 if you have the `mkostemp' function. */
-#define HAVE_MKOSTEMP 1
-
-/* Define to 1 if you have the `mkstemp' function. */
-#define HAVE_MKSTEMP 1
-
-/* Define to 1 if you have the `mmap' function. */
-#define HAVE_MMAP 1
-
-/* Define if mmap with MAP_ANON(YMOUS) works. */
-#define HAVE_MMAP_ANON 1
-
-/* Define if mmap of /dev/zero works. */
-/* #undef HAVE_MMAP_DEV_ZERO */
-
-/* Define if read-only mmap of a plain file works. */
-#define HAVE_MMAP_FILE 1
 
 /* Define if your compiler supports pointer authentication. */
 /* #undef HAVE_PTRAUTH */
@@ -121,9 +97,6 @@
 
 /* Define to 1 if you have the <sys/memfd.h> header file. */
 /* #undef HAVE_SYS_MEMFD_H */
-
-/* Define to 1 if you have the <sys/mman.h> header file. */
-#define HAVE_SYS_MMAN_H 1
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #define HAVE_SYS_STAT_H 1
@@ -150,7 +123,7 @@
 #define PACKAGE_NAME "libffi"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "libffi 3.4.4-experimental"
+#define PACKAGE_STRING "libffi 3.4.6"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "libffi"
@@ -159,26 +132,18 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "3.4.4-experimental"
+#define PACKAGE_VERSION "3.4.6"
 
-/* The size of `double', as computed by sizeof. */
+/* The size of 'double', as computed by sizeof. */
 #define SIZEOF_DOUBLE 8
 
-/* The size of `long double', as computed by sizeof. */
+/* The size of 'long double', as computed by sizeof. */
 #define SIZEOF_LONG_DOUBLE 16
 
-/* The size of `size_t', as computed by sizeof. */
+/* The size of 'size_t', as computed by sizeof. */
 #define SIZEOF_SIZE_T 4
 
-/* If using the C implementation of alloca, define if you know the
-   direction of stack growth for your system; otherwise it will be
-   automatically deduced at runtime.
-	STACK_DIRECTION > 0 => grows toward higher addresses
-	STACK_DIRECTION < 0 => grows toward lower addresses
-	STACK_DIRECTION = 0 => direction of growth unknown */
-/* #undef STACK_DIRECTION */
-
-/* Define to 1 if all of the C90 standard headers exist (not just the ones
+/* Define to 1 if all of the C89 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
    backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
@@ -191,7 +156,7 @@
 /* #undef USING_PURIFY */
 
 /* Version number of package */
-#define VERSION "3.4.4-experimental"
+#define VERSION "3.4.6"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
@@ -204,9 +169,6 @@
 /* #  undef WORDS_BIGENDIAN */
 # endif
 #endif
-
-/* Define to `unsigned int' if <sys/types.h> does not define. */
-/* #undef size_t */
 
 
 #ifdef HAVE_HIDDEN_VISIBILITY_ATTRIBUTE

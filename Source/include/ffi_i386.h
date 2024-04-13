@@ -1,8 +1,8 @@
 #ifdef __i386__
 
 /* -----------------------------------------------------------------*-C-*-
-   libffi 3.4.4-experimental
-     - Copyright (c) 2011, 2014, 2019, 2021, 2022 Anthony Green
+   libffi 3.4.6
+     - Copyright (c) 2011, 2014, 2019, 2021, 2022, 2024 Anthony Green
      - Copyright (c) 1996-2003, 2007, 2008 Red Hat, Inc.
 
    Permission is hereby granted, free of charge, to any person
@@ -52,8 +52,8 @@ extern "C" {
 #endif
 
 /* Specify which architecture libffi is configured for. */
-#ifndef X86_DARWIN
-#define X86_DARWIN
+#ifndef X86
+#define X86
 #endif
 
 /* ---- System configuration information --------------------------------- */
@@ -146,13 +146,11 @@ typedef struct _ffi_type
    when using the static version of the library.
    Besides, as a workaround, they can define FFI_BUILDING if they
    *know* they are going to link with the static library.  */
-#if defined _MSC_VER
+#if defined _MSC_VER && !defined(FFI_STATIC_BUILD)
 # if defined FFI_BUILDING_DLL /* Building libffi.DLL with msvcc.sh */
 #  define FFI_API __declspec(dllexport)
-# elif !defined FFI_BUILDING  /* Importing libffi.DLL */
+# else  /* Importing libffi.DLL */
 #  define FFI_API __declspec(dllimport)
-# else                        /* Building/linking static library */
-#  define FFI_API
 # endif
 #else
 # define FFI_API
@@ -228,21 +226,12 @@ FFI_EXTERN ffi_type ffi_type_sint64;
 FFI_EXTERN ffi_type ffi_type_float;
 FFI_EXTERN ffi_type ffi_type_double;
 FFI_EXTERN ffi_type ffi_type_pointer;
-
-#if 1
 FFI_EXTERN ffi_type ffi_type_longdouble;
-#else
-#define ffi_type_longdouble ffi_type_double
-#endif
 
 #ifdef FFI_TARGET_HAS_COMPLEX_TYPE
 FFI_EXTERN ffi_type ffi_type_complex_float;
 FFI_EXTERN ffi_type ffi_type_complex_double;
-#if 1
 FFI_EXTERN ffi_type ffi_type_complex_longdouble;
-#else
-#define ffi_type_complex_longdouble ffi_type_complex_double
-#endif
 #endif
 #endif /* LIBFFI_HIDE_BASIC_TYPES */
 
@@ -369,14 +358,6 @@ typedef struct {
 FFI_API void *ffi_closure_alloc (size_t size, void **code);
 FFI_API void ffi_closure_free (void *);
 
-#if defined(PA_LINUX) || defined(PA_HPUX)
-#define FFI_CLOSURE_PTR(X) ((void *)((unsigned int)(X) | 2))
-#define FFI_RESTORE_PTR(X) ((void *)((unsigned int)(X) & ~3))
-#else
-#define FFI_CLOSURE_PTR(X) (X)
-#define FFI_RESTORE_PTR(X) (X)
-#endif
-
 FFI_API ffi_status
 ffi_prep_closure (ffi_closure*,
 		  ffi_cif *,
@@ -412,7 +393,7 @@ typedef struct {
 
   /* If this is enabled, then a raw closure has the same layout
      as a regular closure.  We use this to install an intermediate
-     handler to do the transaltion, void** -> ffi_raw*.  */
+     handler to do the translation, void** -> ffi_raw*.  */
 
   void     (*translate_args)(ffi_cif*,void*,void**,void*);
   void      *this_closure;
@@ -480,7 +461,7 @@ ffi_prep_java_raw_closure_loc (ffi_java_raw_closure*,
 
 #endif /* FFI_CLOSURES */
 
-#if FFI_GO_CLOSURES
+#ifdef FFI_GO_CLOSURES
 
 typedef struct {
   void      *tramp;
@@ -523,8 +504,14 @@ FFI_API
 ffi_status ffi_get_struct_offsets (ffi_abi abi, ffi_type *struct_type,
 				   size_t *offsets);
 
-/* Useful for eliminating compiler warnings.  */
+/* Convert between closure and function pointers.  */
+#if defined(PA_LINUX) || defined(PA_HPUX)
+#define FFI_FN(f) ((void (*)(void))((unsigned int)(f) | 2))
+#define FFI_CL(f) ((void *)((unsigned int)(f) & ~3))
+#else
 #define FFI_FN(f) ((void (*)(void))f)
+#define FFI_CL(f) ((void *)(f))
+#endif
 
 /* ---- Definitions shared with assembly code ---------------------------- */
 
