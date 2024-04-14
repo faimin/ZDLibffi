@@ -9,13 +9,12 @@ defaults:
     shell: bash
 
 jobs:
-  
   pod-lib-lint:
-    runs-on: macos-12
+    runs-on: macos-14
     # https://github.com/SDWebImage/SDWebImage/blob/master/.github/workflows/CI.yml
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Install Cocoapods
         run: gem install cocoapods
