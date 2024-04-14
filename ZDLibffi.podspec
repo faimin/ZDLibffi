@@ -24,18 +24,19 @@ Pod::Spec.new do |s|
     :tag => s.version.to_s
   }
   s.prefix_header_file = false
-  
+
   s.ios.deployment_target = '10.0'
   s.osx.deployment_target = '10.12'
   s.watchos.deployment_target = '3.0'
   s.tvos.deployment_target = '10.0'
-  
+
   s.module_name = 'ZDLibffi'
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64',
     'GCC_PREPROCESSOR_DEFINITIONS' => 'USE_DL_PREFIX=1 HAVE_MORECORE=0', #ONLY_MSPACES=1
   }
-  
+
   s.source_files = "Source/**/*.{h,c,S}"
   s.public_header_files = "Source/include/*.h"
 
