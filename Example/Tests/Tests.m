@@ -7,7 +7,7 @@
 //
 
 @import XCTest;
-@import Libffi_iOS;
+@import ZDLibffi;
 
 @interface Tests : XCTestCase
 

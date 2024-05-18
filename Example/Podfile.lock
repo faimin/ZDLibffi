@@ -1,5 +1,5 @@
 PODS:
-  - ZDLibffi (0.343.0)
+  - ZDLibffi (0.346.0)
 
 DEPENDENCIES:
   - ZDLibffi (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ZDLibffi: e8d4e71d30cfa60e684502f5094c5c23d47b7f51
+  ZDLibffi: ba3ae3579cac34396601998a91eb218ce6b78291
 
 PODFILE CHECKSUM: 640a4cfd1bc8b3d3e9b85a4e4db94597dfb0acc1
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.15.2
