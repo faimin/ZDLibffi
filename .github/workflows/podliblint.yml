@@ -10,7 +10,7 @@ defaults:
 
 jobs:
   pod-lib-lint:
-    runs-on: macos-14
+    runs-on: macos-15
     # https://github.com/SDWebImage/SDWebImage/blob/master/.github/workflows/CI.yml
     steps:
       - name: Checkout
@@ -25,4 +25,4 @@ jobs:
       - name: Run Podsepec Lint
         run: |
           set -o pipefail
-          pod lib lint ZDLibffi.podspec --allow-warnings --skip-tests
+          pod lib lint ZDLibffi.podspec --allow-warnings --platforms=ios,macos --skip-tests
