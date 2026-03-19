@@ -1,5 +1,3 @@
-#ifdef __x86_64__
-
 #define UNIX64_RET_VOID		0
 #define UNIX64_RET_UINT8	1
 #define UNIX64_RET_UINT16	2
@@ -35,7 +33,4 @@
 #else
 #define UNIX64_TRAMP_SIZE	32
 #endif
-#endif
-
-
 #endif

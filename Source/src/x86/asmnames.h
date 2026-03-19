@@ -1,5 +1,3 @@
-#ifdef __x86_64__
-
 #ifndef ASMNAMES_H
 #define ASMNAMES_H
 
@@ -30,6 +28,3 @@
 #endif
 
 #endif /* ASMNAMES_H */
-
-
-#endif
