@@ -1,4 +1,4 @@
-#ifdef __arm64__
+#if defined(__arm64__) && !defined(__ILP32__)
 
 /* Copyright (c) 2009, 2010, 2011, 2012 ARM Ltd.
 
@@ -25,34 +25,14 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-
-#if __has_include(<fficonfig.h>)
 #include <fficonfig.h>
-#else
-#include "fficonfig.h"
-#endif
-
-#if __has_include(<ffi.h>)
 #include <ffi.h>
-#else
-#include "ffi.h"
-#endif
-
-#if __has_include(<ffi_common.h>)
 #include <ffi_common.h>
-#else
-#include "ffi_common.h"
-#endif
-
-#include "internal_arm64.h"
+#include "internal.h"
 #ifdef _WIN32
 #include <windows.h> /* FlushInstructionCache */
 #endif
-#if __has_include(<tramp.h>)
 #include <tramp.h>
-#else
-#include "tramp.h"
-#endif
 
 /* Force FFI_TYPE_LONGDOUBLE to be different than FFI_TYPE_DOUBLE;
    all further uses in this file will refer to the 128-bit type.  */
@@ -85,7 +65,7 @@ struct call_context
 #if FFI_EXEC_TRAMPOLINE_TABLE
 
 #ifdef __MACH__
-#ifdef HAVE_PTRAUTH
+#ifdef HAVE_ARM64E_PTRAUTH
 #include <ptrauth.h>
 #endif
 #include <mach/vm_param.h>
@@ -667,7 +647,10 @@ extern void ffi_call_SYSV (struct call_context *context, void *frame,
 			   void *closure) FFI_HIDDEN;
 
 /* Call a function with the provided arguments and capture the return
-   value.  */
+   value.
+   n.b. ffi_call_SYSV will steal the alloca'd `stack` variable here for use
+   _as its own stack_ - so we need to compile this function without ASAN */
+FFI_ASAN_NO_SANITIZE
 static void
 ffi_call_int (ffi_cif *cif, void (*fn)(void), void *orig_rvalue,
 	      void **avalue, void *closure)
@@ -704,7 +687,7 @@ ffi_call_int (ffi_cif *cif, void (*fn)(void), void *orig_rvalue,
   else if (flags & AARCH64_RET_NEED_COPY)
     rsize = 16;
 
-  /* Allocate consectutive stack for everything we'll need.
+  /* Allocate consecutive stack for everything we'll need.
      The frame uses 40 bytes for: lr, fp, rvalue, flags, sp */
   context = alloca (sizeof(struct call_context) + stack_bytes + 40 + rsize);
   stack = context + 1;
@@ -899,7 +882,7 @@ ffi_prep_closure_loc (ffi_closure *closure,
 
 #if FFI_EXEC_TRAMPOLINE_TABLE
 # ifdef __MACH__
-#  ifdef HAVE_PTRAUTH
+#  ifdef HAVE_ARM64E_PTRAUTH
   codeloc = ptrauth_auth_data(codeloc, ptrauth_key_function_pointer, 0);
 #  endif
   void **config = (void **)((uint8_t *)codeloc - PAGE_MAX_SIZE);

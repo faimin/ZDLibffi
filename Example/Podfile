@@ -10,8 +10,6 @@ target 'Libffi_iOS_Example' do
   pod 'ZDLibffi', :path => '../'
 
   target 'Libffi_iOS_Tests' do
-    inherit! :search_paths
-
-    
+    inherit! :complete
   end
 end

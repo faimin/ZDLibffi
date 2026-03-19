@@ -8,10 +8,10 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZDLibffi'
-  s.version          = '0.346.0'
+  s.version          = '0.352.0'
   s.summary          = 'Libffi source code integrate'
   s.description      = <<-DESC
-    libffi v3.4.3 integrate to iOS && macOS && watchos && tvos.
+    libffi v3.5.2 integrate to iOS && macOS && watchOS && tvOS && visionOS.
                        DESC
   s.homepage         = 'https://github.com/libffi/libffi'
   s.license          = "MIT"
@@ -29,12 +29,13 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.12'
   s.watchos.deployment_target = '3.0'
   s.tvos.deployment_target = '10.0'
+  s.visionos.deployment_target = '1.0'
 
   s.module_name = 'ZDLibffi'
   s.pod_target_xcconfig = {
     'DEFINES_MODULE' => 'YES',
-    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64',
-    'GCC_PREPROCESSOR_DEFINITIONS' => 'USE_DL_PREFIX=1 HAVE_MORECORE=0', #ONLY_MSPACES=1
+    # iOS: avoid dlmalloc symbol collisions and disable sbrk/morecore path.
+    'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) USE_DL_PREFIX=1 HAVE_MORECORE=0',
   }
 
   s.source_files = "Source/**/*.{h,c,S}"

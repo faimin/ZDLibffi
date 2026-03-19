@@ -22,18 +22,8 @@
    DEALINGS IN THE SOFTWARE.
    ----------------------------------------------------------------------- */
 
-#if __has_include(<ffi.h>)
 #include <ffi.h>
-#else
-#include "ffi.h"
-#endif
-
-#if __has_include(<ffi_common.h>)
 #include <ffi_common.h>
-#else
-#include "ffi_common.h"
-#endif
-
 #include <stdlib.h>
 #include <stdio.h>
 

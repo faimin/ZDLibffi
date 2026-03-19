@@ -5,45 +5,56 @@
 [![License](https://img.shields.io/cocoapods/l/ZDLibffi.svg?style=flat)](https://cocoapods.org/pods/ZDLibffi)
 [![Platform](https://img.shields.io/cocoapods/p/ZDLibffi.svg?style=flat)](https://cocoapods.org/pods/ZDLibffi)
 
+## Introduction
 
-## Introduction：
-
-[libffi v3.4.3](https://github.com/libffi/libffi/releases/tag/v3.4.3) source code that support `module`
-
-## Env：
-
-> [libffi v3.4.3](https://github.com/libffi/libffi/releases/tag/v3.4.3) 
->
-> Xcode 13.4.1 
->
-> MacOS 12.6
-
-## Compile source code：
-
-1. `sh autogen.sh`
-2. `python generate-darwin-source-and-headers.py --only-ios`
-3. open `libffi.xcodeproj`
-4. select scheme `libffi-iOS` and device `Generic iOS Device`
-4. click `Product - Build`
-If success, you would see a `Product/libffi.a` in the side bar, you can right click it to get the lib in the finder.
+`ZDLibffi` packages [libffi v3.5.2](https://github.com/libffi/libffi/releases/tag/v3.5.2) for Apple platforms and supports modular imports.
 
 ## Installation
 
-Libffi_iOS is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+Add the pod in your `Podfile`:
 
 ```ruby
 pod 'ZDLibffi'
 ```
 
+## One-Click Upgrade
+
+Use the built-in script to upgrade libffi source and regenerate the xcframework:
+
+```bash
+./scripts/upgrade_libffi.sh --libffi-version 3.5.2 --pod-version 0.352.0
+```
+
+What this script does:
+
+1. Downloads the official `libffi` release tarball.
+2. Regenerates `Source/` headers and source files for modern Apple architectures.
+3. Builds `XCFramework/ZDLibffi.xcframework`.
+4. Updates version references in `ZDLibffi.podspec` and `README.md`.
+
+## XCFramework Coverage
+
+Generated `XCFramework/ZDLibffi.xcframework` contains slices for:
+
+- iOS (device)
+- iOS Simulator
+- macOS
+- Mac Catalyst
+- tvOS (device)
+- tvOS Simulator
+- watchOS (device)
+- watchOS Simulator
+- visionOS (device)
+- visionOS Simulator
+
 ## Author
 
 faimin, fuxianchao@gmail.com
 
-## Thanks：
+## Thanks
 
 - [how to compile for iOS](https://github.com/libffi/libffi/issues/510#issuecomment-654689416)
 
 ## License
 
-Libffi_iOS is available under the MIT license. See the LICENSE file for more info.
+ZDLibffi is available under the MIT license. See the LICENSE file for more info.
