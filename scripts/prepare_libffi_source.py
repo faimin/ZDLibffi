@@ -72,6 +72,41 @@ def write_selector_header(output_dir: Path, base_name: str, entries):
             header.write("#endif\n")
 
 
+def patch_ffi_common_include(include_dir: Path):
+    ffi_common = include_dir / "ffi_common.h"
+    content = ffi_common.read_text(encoding="utf-8")
+    needle = "#include <fficonfig.h>"
+    replacement = (
+        "#if __has_include(<fficonfig.h>)\n"
+        "#include <fficonfig.h>\n"
+        "#elif __has_include(<ZDLibffi/fficonfig.h>)\n"
+        "#include <ZDLibffi/fficonfig.h>\n"
+        "#else\n"
+        "#include \"fficonfig.h\"\n"
+        "#endif"
+    )
+    if needle in content:
+        content = content.replace(needle, replacement, 1)
+        ffi_common.write_text(content, encoding="utf-8")
+
+
+def patch_arch_ffi_header_include(header_path: Path):
+    content = header_path.read_text(encoding="utf-8")
+    needle = "#include <ffitarget.h>"
+    replacement = (
+        "#if __has_include(<ffitarget.h>)\n"
+        "#include <ffitarget.h>\n"
+        "#elif __has_include(<ZDLibffi/ffitarget.h>)\n"
+        "#include <ZDLibffi/ffitarget.h>\n"
+        "#else\n"
+        "#include \"ffitarget.h\"\n"
+        "#endif"
+    )
+    if needle in content:
+        content = content.replace(needle, replacement, 1)
+        header_path.write_text(content, encoding="utf-8")
+
+
 def prepare_source_tree(libffi_dir: Path, output_dir: Path):
     if output_dir.exists():
         shutil.rmtree(output_dir)
@@ -157,6 +192,8 @@ def prepare_source_tree(libffi_dir: Path, output_dir: Path):
     for header in ["ffi_cfi.h", "ffi_common.h", "tramp.h"]:
         shutil.copy2(libffi_dir / "include" / header, include_dir / header)
 
+    patch_ffi_common_include(include_dir)
+
 
 def configure_and_generate_headers(libffi_dir: Path, output_dir: Path):
     host_machine = os.uname().machine
@@ -187,6 +224,7 @@ def configure_and_generate_headers(libffi_dir: Path, output_dir: Path):
             arch["wrap_prefix"],
             arch["wrap_suffix"],
         )
+        patch_arch_ffi_header_include(include_output / f"ffi_{suffix}.h")
         copy_wrapped_file(
             build_dir / "fficonfig.h",
             include_output / f"fficonfig_{suffix}.h",

@@ -83,7 +83,13 @@ extern "C" {
 /* This should always refer to the last type code (for sanity checks).  */
 #define FFI_TYPE_LAST       FFI_TYPE_COMPLEX
 
+#if __has_include(<ffitarget.h>)
 #include <ffitarget.h>
+#elif __has_include(<ZDLibffi/ffitarget.h>)
+#include <ZDLibffi/ffitarget.h>
+#else
+#include "ffitarget.h"
+#endif
 
 #ifndef LIBFFI_ASM
 
