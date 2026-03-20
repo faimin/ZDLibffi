@@ -174,7 +174,7 @@ def prepare_source_tree(libffi_dir: Path, output_dir: Path):
     for header in ["ffi_cfi.h", "ffi_common.h", "tramp.h"]:
         shutil.copy2(libffi_dir / "include" / header, include_dir / header)
 
-    patch_ffi_common_include(include_dir)
+    patch_include(include_dir / "ffi_common.h", "fficonfig.h")
 
 
 def configure_and_generate_headers(libffi_dir: Path, output_dir: Path):
