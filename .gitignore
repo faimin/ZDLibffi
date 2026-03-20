@@ -11,6 +11,7 @@ xcuserdata/
 
 ## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
 build/
+.build
 DerivedData/
 *.moved-aside
 *.pbxuser
@@ -21,6 +22,7 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
+.gitkeep
 **/**/.gitkeep
 
 ## Obj-C/Swift specific
