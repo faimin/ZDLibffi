@@ -72,35 +72,17 @@ def write_selector_header(output_dir: Path, base_name: str, entries):
             header.write("#endif\n")
 
 
-def patch_ffi_common_include(include_dir: Path):
-    ffi_common = include_dir / "ffi_common.h"
-    content = ffi_common.read_text(encoding="utf-8")
-    needle = "#include <fficonfig.h>"
-    replacement = (
-        "#if __has_include(<fficonfig.h>)\n"
-        "#include <fficonfig.h>\n"
-        "#elif __has_include(<ZDLibffi/fficonfig.h>)\n"
-        "#include <ZDLibffi/fficonfig.h>\n"
-        "#else\n"
-        "#include \"fficonfig.h\"\n"
-        "#endif"
-    )
-    if needle in content:
-        content = content.replace(needle, replacement, 1)
-        ffi_common.write_text(content, encoding="utf-8")
-
-
-def patch_arch_ffi_header_include(header_path: Path):
+def patch_include(header_path: Path, header_name: str):
     content = header_path.read_text(encoding="utf-8")
-    needle = "#include <ffitarget.h>"
+    needle = f"#include <{header_name}>"
     replacement = (
-        "#if __has_include(<ffitarget.h>)\n"
-        "#include <ffitarget.h>\n"
-        "#elif __has_include(<ZDLibffi/ffitarget.h>)\n"
-        "#include <ZDLibffi/ffitarget.h>\n"
-        "#else\n"
-        "#include \"ffitarget.h\"\n"
-        "#endif"
+        f"#if __has_include(<{header_name}>)\n"
+        f"#include <{header_name}>\n"
+        f"#elif __has_include(<ZDLibffi/{header_name}>)\n"
+        f"#include <ZDLibffi/{header_name}>\n"
+        f"#else\n"
+        f'#include "{header_name}"\n'
+        f"#endif"
     )
     if needle in content:
         content = content.replace(needle, replacement, 1)
