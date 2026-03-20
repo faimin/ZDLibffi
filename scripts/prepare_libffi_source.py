@@ -206,7 +206,7 @@ def configure_and_generate_headers(libffi_dir: Path, output_dir: Path):
             arch["wrap_prefix"],
             arch["wrap_suffix"],
         )
-        patch_arch_ffi_header_include(include_output / f"ffi_{suffix}.h")
+        patch_include(include_output / f"ffi_{suffix}.h", "ffitarget.h")
         copy_wrapped_file(
             build_dir / "fficonfig.h",
             include_output / f"fficonfig_{suffix}.h",
