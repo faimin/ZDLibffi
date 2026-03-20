@@ -1,7 +1,14 @@
-# pod lib lint
-name: pod lib lint
+# lint
+name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - '*'
 
 # Default to bash
 defaults:
@@ -9,7 +16,8 @@ defaults:
     shell: bash
 
 jobs:
-  pod-lib-lint:
+  Lint:
+    name: Pod Lib Lint
     runs-on: macos-15
     # https://github.com/SDWebImage/SDWebImage/blob/master/.github/workflows/CI.yml
     steps:
@@ -27,3 +35,16 @@ jobs:
           set -o pipefail
           pod lib lint ZDLibffi.podspec --allow-warnings --platforms=ios,macos --skip-tests
           pod lib lint ZDLibffi.podspec --allow-warnings --platforms=ios,macos --use-modular-headers --skip-tests
+
+  SPM:
+    name: SPM Build
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate Package.swift
+        run: swift package describe
+
+      - name: Build with SwiftPM
+        run: swift build
