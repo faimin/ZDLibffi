@@ -26,3 +26,4 @@ jobs:
         run: |
           set -o pipefail
           pod lib lint ZDLibffi.podspec --allow-warnings --platforms=ios,macos --skip-tests
+          pod lib lint ZDLibffi.podspec --allow-warnings --platforms=ios,macos --use-modular-headers --skip-tests
