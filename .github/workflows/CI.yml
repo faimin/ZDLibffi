@@ -8,7 +8,7 @@ on:
       - main
   pull_request:
     branches:
-      - '*'
+      - "*"
 
 # Default to bash
 defaults:
@@ -17,24 +17,30 @@ defaults:
 
 jobs:
   Lint:
-    name: Pod Lib Lint
+    name: Pod Lib Lint (${{ matrix.platform }})
     runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - ios
+          - macos
+          - watchos
+          - tvos
+          - visionos
     # https://github.com/SDWebImage/SDWebImage/blob/master/.github/workflows/CI.yml
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Install Cocoapods
         run: gem install cocoapods
 
-      - name: Pod Update
-        run: pod update --project-directory=./Example
-
-      - name: Run Podsepec Lint
+      - name: Run Podspec Lint
         run: |
           set -o pipefail
-          pod lib lint ZDLibffi.podspec --allow-warnings --platforms=ios,macos --skip-tests
-          pod lib lint ZDLibffi.podspec --allow-warnings --platforms=ios,macos --use-modular-headers --skip-tests
+          pod lib lint ZDLibffi.podspec --allow-warnings --platforms=${{ matrix.platform }} --skip-tests
+          pod lib lint ZDLibffi.podspec --allow-warnings --platforms=${{ matrix.platform }} --use-modular-headers --skip-tests
 
   SPM:
     name: SPM Build
