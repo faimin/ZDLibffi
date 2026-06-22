@@ -33,6 +33,7 @@ ARCH_CONFIGS = [
         "suffix": "x86_64",
         "sdk": "iphonesimulator",
         "target": "x86_64-apple-ios-simulator",
+        "configure_host": "x86_64-apple-darwin",
         "version_min": "-miphoneos-version-min=10.0",
         "condition": "defined(__x86_64__)",
         "wrap_prefix": "#ifdef __x86_64__\n\n",
@@ -177,9 +178,34 @@ def prepare_source_tree(libffi_dir: Path, output_dir: Path):
     patch_include(include_dir / "ffi_common.h", "fficonfig.h")
 
 
+def patch_config_sub(libffi_dir: Path):
+    """Patch config.sub to recognize arm64_32 and Apple platform OS names."""
+    config_sub = libffi_dir / "config.sub"
+    content = config_sub.read_text(encoding="utf-8")
+    patched = False
+    # Add arm64_32 CPU recognition
+    if "arm64_32" not in content:
+        content = content.replace(
+            "arm64-* | aarch64le-*)\n\t\tcpu=aarch64\n\t\t;;",
+            "arm64-* | arm64_32-* | aarch64le-*)\n\t\tcpu=aarch64\n\t\t;;",
+        )
+        patched = True
+    # Add watchos/tvos/visionos OS recognition
+    if "watchos" not in content:
+        content = content.replace(
+            "| os9* | macos* | osx* | ios* \\",
+            "| os9* | macos* | osx* | ios* | watchos* | tvos* | visionos* \\",
+        )
+        patched = True
+    if patched:
+        config_sub.write_text(content, encoding="utf-8")
+
+
 def configure_and_generate_headers(libffi_dir: Path, output_dir: Path):
     host_machine = os.uname().machine
     include_output = output_dir / "include"
+
+    patch_config_sub(libffi_dir)
 
     for arch in ARCH_CONFIGS:
         build_dir = libffi_dir / f"build_zd_{arch['name']}"
@@ -192,9 +218,10 @@ def configure_and_generate_headers(libffi_dir: Path, output_dir: Path):
         env["LD"] = f"xcrun -sdk {arch['sdk']} ld -target {arch['target']}"
         env["CFLAGS"] = arch["version_min"]
 
+        configure_host = arch.get("configure_host", arch["target"])
         configure_cmd = [
             "../configure",
-            f"--host={arch['target']}",
+            f"--host={configure_host}",
             f"--build={host_machine}-apple-darwin",
         ]
         run(configure_cmd, cwd=build_dir, env=env)

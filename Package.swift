@@ -22,6 +22,7 @@ let package = Package(
         .target(
             name: "ZDLibffi",
             path: "Source",
+            exclude: ["src/common/dlmalloc.c"],
             publicHeadersPath: "include",
             cSettings: [
                 .headerSearchPath("include"),

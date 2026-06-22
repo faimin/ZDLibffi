@@ -43,9 +43,6 @@
 
 #if defined (X86_64) && defined (__i386__)
 #undef X86_64
-#warning ******************************************************
-#warning ********** X86 IS DEFINED ****************************
-#warning ******************************************************
 #define X86
 #endif
 
@@ -57,6 +54,10 @@
 #define FFI_TARGET_SPECIFIC_STACK_SPACE_ALLOCATION
 #ifndef _MSC_VER
 #define FFI_TARGET_HAS_COMPLEX_TYPE
+#endif
+
+#ifdef X86_64
+#define FFI_TARGET_HAS_INT128
 #endif
 
 /* ---- Generic type definitions ----------------------------------------- */

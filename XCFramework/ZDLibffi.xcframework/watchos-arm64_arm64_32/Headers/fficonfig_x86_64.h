@@ -62,6 +62,9 @@
 /* Define if __attribute__((visibility("hidden"))) is supported. */
 #define HAVE_HIDDEN_VISIBILITY_ATTRIBUTE 1
 
+/* Define if __int128_t and __uint128_t are supported. */
+#define HAVE_INT128 1
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
@@ -71,10 +74,10 @@
 /* Define if you support more than one size of the long double type */
 /* #undef HAVE_LONG_DOUBLE_VARIANT */
 
-/* Define to 1 if you have the 'memcpy' function. */
+/* Define to 1 if you have the `memcpy' function. */
 #define HAVE_MEMCPY 1
 
-/* Define to 1 if you have the 'memfd_create' function. */
+/* Define to 1 if you have the `memfd_create' function. */
 /* #undef HAVE_MEMFD_CREATE */
 
 /* Define if .eh_frame sections should be read-only. */
@@ -123,7 +126,7 @@
 #define PACKAGE_NAME "libffi"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "libffi 3.5.2"
+#define PACKAGE_STRING "libffi 3.6.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "libffi"
@@ -132,18 +135,18 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "3.5.2"
+#define PACKAGE_VERSION "3.6.0"
 
-/* The size of 'double', as computed by sizeof. */
+/* The size of `double', as computed by sizeof. */
 #define SIZEOF_DOUBLE 8
 
-/* The size of 'long double', as computed by sizeof. */
+/* The size of `long double', as computed by sizeof. */
 #define SIZEOF_LONG_DOUBLE 16
 
-/* The size of 'size_t', as computed by sizeof. */
+/* The size of `size_t', as computed by sizeof. */
 #define SIZEOF_SIZE_T 8
 
-/* Define to 1 if all of the C89 standard headers exist (not just the ones
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
    backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
@@ -156,7 +159,7 @@
 /* #undef USING_PURIFY */
 
 /* Version number of package */
-#define VERSION "3.5.2"
+#define VERSION "3.6.0"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */

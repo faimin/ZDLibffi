@@ -1,15 +1,17 @@
 # ZDLibffi
 
-[![pod lib lint](https://github.com/faimin/ZDLibffi/actions/workflows/podliblint.yml/badge.svg)](https://github.com/faimin/ZDLibffi/actions/workflows/podliblint.yml)
+[![CI](https://github.com/faimin/ZDLibffi/actions/workflows/CI.yml/badge.svg)](https://github.com/faimin/ZDLibffi/actions/workflows/CI.yml)
 [![Version](https://img.shields.io/cocoapods/v/ZDLibffi.svg?style=flat)](https://cocoapods.org/pods/ZDLibffi)
 [![License](https://img.shields.io/cocoapods/l/ZDLibffi.svg?style=flat)](https://cocoapods.org/pods/ZDLibffi)
 [![Platform](https://img.shields.io/cocoapods/p/ZDLibffi.svg?style=flat)](https://cocoapods.org/pods/ZDLibffi)
 
 ## Introduction
 
-`ZDLibffi` packages [libffi v3.5.2](https://github.com/libffi/libffi/releases/tag/v3.5.2) for Apple platforms and supports modular imports.
+`ZDLibffi` packages [libffi v3.6.0](https://github.com/libffi/libffi/releases/tag/v3.6.0) for Apple platforms and supports modular imports.
 
 ## Installation
+
+### CocoaPods
 
 Add the pod in your `Podfile`:
 
@@ -17,12 +19,54 @@ Add the pod in your `Podfile`:
 pod 'ZDLibffi'
 ```
 
+### Swift Package Manager
+
+Add the dependency in your `Package.swift`:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/faimin/ZDLibffi.git", from: "0.360.0")
+]
+```
+
+Or add it via Xcode: File → Add Package Dependencies, then enter the repository URL.
+
+## CI
+
+This project uses GitHub Actions for continuous integration. The workflow runs automatically on pushes to `main`/`master` and on all pull requests.
+
+### What CI Checks
+
+| Job | Description |
+|-----|-------------|
+| **Pod Lib Lint** | Validates the podspec on each Apple platform (ios, macos, watchos, tvos, visionos), both with and without modular headers |
+| **SPM Build** | Validates `Package.swift` and builds the package with SwiftPM |
+
+### Running CI Locally
+
+You can replicate the CI checks on your machine:
+
+```bash
+# CocoaPods lint (replace PLATFORM with ios/macos/watchos/tvos/visionos)
+pod lib lint ZDLibffi.podspec --allow-warnings --platforms=ios --skip-tests
+pod lib lint ZDLibffi.podspec --allow-warnings --platforms=ios --use-modular-headers --skip-tests
+
+# SwiftPM
+swift package describe
+swift build
+```
+
+### Triggering CI
+
+- Push to `main` or `master` branch
+- Open or update a pull request targeting any branch
+
 ## One-Click Upgrade
 
 Use the built-in script to upgrade libffi source and regenerate the xcframework:
 
 ```bash
-./scripts/upgrade_libffi.sh --libffi-version 3.5.2 --pod-version 0.352.0
+./scripts/upgrade_libffi.sh --libffi-version 3.6.0 --pod-version 0.360.0
 ```
 
 What this script does:
@@ -31,6 +75,14 @@ What this script does:
 2. Regenerates `Source/` headers and source files for modern Apple architectures.
 3. Builds `XCFramework/ZDLibffi.xcframework`.
 4. Updates version references in `ZDLibffi.podspec` and `README.md`.
+
+Options:
+
+| Flag | Description |
+|------|-------------|
+| `--libffi-version` | Target libffi version (e.g. `3.6.0`) |
+| `--pod-version` | Pod version string (defaults to `0.<version_digits>.0`) |
+| `--skip-xcframework` | Skip the xcframework build step |
 
 ## XCFramework Coverage
 

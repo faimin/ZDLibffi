@@ -1,7 +1,7 @@
 #ifdef __x86_64__
 
 /* -----------------------------------------------------------------*-C-*-
-   libffi 3.5.2
+   libffi 3.6.0
      - Copyright (c) 2011, 2014, 2019, 2021, 2022, 2024, 2025 Anthony Green
      - Copyright (c) 1996-2003, 2007, 2008 Red Hat, Inc.
 
@@ -79,9 +79,11 @@ extern "C" {
 #define FFI_TYPE_STRUCT     13
 #define FFI_TYPE_POINTER    14
 #define FFI_TYPE_COMPLEX    15
+#define FFI_TYPE_UINT128    16
+#define FFI_TYPE_SINT128    17
 
 /* This should always refer to the last type code (for sanity checks).  */
-#define FFI_TYPE_LAST       FFI_TYPE_COMPLEX
+#define FFI_TYPE_LAST       FFI_TYPE_SINT128
 
 #if __has_include(<ffitarget.h>)
 #include <ffitarget.h>
@@ -235,6 +237,11 @@ FFI_EXTERN ffi_type ffi_type_complex_float;
 FFI_EXTERN ffi_type ffi_type_complex_double;
 FFI_EXTERN ffi_type ffi_type_complex_longdouble;
 #endif
+
+#ifdef FFI_TARGET_HAS_INT128
+FFI_EXTERN ffi_type ffi_type_uint128;
+FFI_EXTERN ffi_type ffi_type_sint128;
+#endif
 #endif /* LIBFFI_HIDE_BASIC_TYPES */
 
 typedef enum {
@@ -352,6 +359,11 @@ typedef struct {
   void *trampoline_table;
   void *trampoline_table_entry;
 #else
+  /* Anonymous unions are C11 (a GNU extension in C99); __extension__ keeps
+     the field names without tripping -Wpedantic under -std=c99 (#795).  */
+#ifdef __GNUC__
+  __extension__
+#endif
   union {
     char tramp[FFI_TRAMPOLINE_SIZE];
     void *ftramp;

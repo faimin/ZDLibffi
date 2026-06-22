@@ -8,10 +8,10 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZDLibffi'
-  s.version          = '0.352.1'
+  s.version          = '0.360.0'
   s.summary          = 'Libffi source code integrate'
   s.description      = <<-DESC
-    libffi v3.5.2 integrate to iOS && macOS && watchOS && tvOS && visionOS.
+    libffi v3.6.0 integrate to iOS && macOS && watchOS && tvOS && visionOS.
                        DESC
   s.homepage         = 'https://github.com/libffi/libffi'
   s.license          = "MIT"
@@ -39,6 +39,7 @@ Pod::Spec.new do |s|
   }
 
   s.source_files = "Source/**/*.{h,c,S}"
+  s.exclude_files = "Source/src/common/dlmalloc.c"
   s.public_header_files = "Source/include/*.h"
 
 end

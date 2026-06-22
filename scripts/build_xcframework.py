@@ -9,7 +9,6 @@ from pathlib import Path
 COMMON_C_SOURCES = [
     "src/common/closures.c",
     "src/common/debug.c",
-    "src/common/dlmalloc.c",
     "src/common/java_raw_api.c",
     "src/common/prep_cif.c",
     "src/common/raw_api.c",
