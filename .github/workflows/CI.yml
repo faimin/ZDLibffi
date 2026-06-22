@@ -18,7 +18,7 @@ defaults:
 jobs:
   Lint:
     name: Pod Lib Lint (${{ matrix.platform }})
-    runs-on: macos-15
+    runs-on: macos-latest
     strategy:
       fail-fast: false
       matrix:
@@ -44,7 +44,7 @@ jobs:
 
   SPM:
     name: SPM Build
-    runs-on: macos-15
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
