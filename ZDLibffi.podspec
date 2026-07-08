@@ -8,10 +8,10 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZDLibffi'
-  s.version          = '0.360.0'
+  s.version          = '0.370.0'
   s.summary          = 'Libffi source code integrate'
   s.description      = <<-DESC
-    libffi v3.6.0 integrate to iOS && macOS && watchOS && tvOS && visionOS.
+    libffi v3.7.0 integrate to iOS && macOS && watchOS && tvOS && visionOS.
                        DESC
   s.homepage         = 'https://github.com/libffi/libffi'
   s.license          = "MIT"
