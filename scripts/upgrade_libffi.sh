@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-LIBFFI_VERSION="3.7.0"
+LIBFFI_VERSION="3.7.1"
 POD_VERSION=""
 SKIP_XCFRAMEWORK=0
 
