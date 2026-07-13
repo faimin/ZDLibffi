@@ -1,92 +1,76 @@
-# lint
 name: CI
 
 on:
   push:
-    branches:
-      - master
-      - main
+    branches: [main, master]
+    tags: ['*']
   pull_request:
-    branches:
-      - "*"
-  workflow_dispatch:
-    inputs:
-      build_xcframework:
-        description: 'Build ZDLibffi.xcframework'
-        type: boolean
-        default: true
 
-# Default to bash
-defaults:
-  run:
-    shell: bash
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
-  Lint:
-    name: Pod Lib Lint (${{ matrix.platform }})
+  lint:
+    name: Pod Lint (${{ matrix.platform }})
     runs-on: macos-latest
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - ios
-          - macos
-          - watchos
-          - tvos
-          - visionos
-    # https://github.com/SDWebImage/SDWebImage/blob/master/.github/workflows/CI.yml
+        platform: [ios, macos, watchos, tvos, visionos]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install Cocoapods
-        run: gem install cocoapods
-
-      - name: Run Podspec Lint
-        run: |
-          set -o pipefail
+      - uses: actions/checkout@v4
+      - run: |
           pod lib lint ZDLibffi.podspec --allow-warnings --platforms=${{ matrix.platform }} --skip-tests
           pod lib lint ZDLibffi.podspec --allow-warnings --platforms=${{ matrix.platform }} --use-modular-headers --skip-tests
 
-  SPM:
+  spm:
     name: SPM Build
     runs-on: macos-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - run: swift build
 
-      - name: Validate Package.swift
-        run: swift package describe
-
-      - name: Build with SwiftPM
-        run: swift build
-
-  XCFramework:
-    name: Build XCFramework
-    if: github.event_name == 'workflow_dispatch' && inputs.build_xcframework
+  release:
+    name: Release XCFramework
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [lint, spm]
     runs-on: macos-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Build XCFramework
         run: |
           python3 scripts/build_xcframework.py \
             --source Source \
-            --output XCFramework/ZDLibffi.xcframework \
-            --build-dir build/xcframework
+            --output ZDLibffi.xcframework \
+            --build-dir build
 
-      - name: Verify XCFramework
+      - name: Package
+        run: zip -ry ZDLibffi.xcframework.zip ZDLibffi.xcframework
+
+      - name: Generate changelog
         run: |
-          echo "=== XCFramework slices ==="
-          xcodebuild -framework XCFramework/ZDLibffi.xcframework 2>/dev/null || true
-          ls -la XCFramework/ZDLibffi.xcframework/
-          echo "=== Supported platforms ==="
-          plutil -p XCFramework/ZDLibffi.xcframework/Info.plist | grep -E "SupportedPlatform|SupportedArchitectures"
+          TAG="${GITHUB_REF#refs/tags/}"
+          PREV=$(git describe --tags --abbrev=0 "${TAG}^" 2>/dev/null || git rev-list --max-parents=0 HEAD)
+          LIBFFI_VER=$(sed -n 's/.*libffi v\([0-9.]*\).*/\1/p' ZDLibffi.podspec | head -1)
 
-      - name: Upload XCFramework
-        uses: actions/upload-artifact@v4
+          cat > CHANGELOG.md <<EOF
+          ## What's Changed
+
+          $(git log "${PREV}..${TAG}" --pretty=format:"- %s (%h)" --no-merges)
+
+          **libffi version:** ${LIBFFI_VER}
+
+          **Full Changelog:** https://github.com/${{ github.repository }}/compare/${PREV}...${TAG}
+          EOF
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
         with:
-          name: ZDLibffi.xcframework
-          path: XCFramework/ZDLibffi.xcframework
-          compression-level: 6
+          body_path: CHANGELOG.md
+          files: ZDLibffi.xcframework.zip
