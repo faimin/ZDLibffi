@@ -9,6 +9,12 @@ on:
   pull_request:
     branches:
       - "*"
+  workflow_dispatch:
+    inputs:
+      build_xcframework:
+        description: 'Build ZDLibffi.xcframework'
+        type: boolean
+        default: true
 
 # Default to bash
 defaults:
@@ -54,3 +60,33 @@ jobs:
 
       - name: Build with SwiftPM
         run: swift build
+
+  XCFramework:
+    name: Build XCFramework
+    if: github.event_name == 'workflow_dispatch' && inputs.build_xcframework
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build XCFramework
+        run: |
+          python3 scripts/build_xcframework.py \
+            --source Source \
+            --output XCFramework/ZDLibffi.xcframework \
+            --build-dir build/xcframework
+
+      - name: Verify XCFramework
+        run: |
+          echo "=== XCFramework slices ==="
+          xcodebuild -framework XCFramework/ZDLibffi.xcframework 2>/dev/null || true
+          ls -la XCFramework/ZDLibffi.xcframework/
+          echo "=== Supported platforms ==="
+          plutil -p XCFramework/ZDLibffi.xcframework/Info.plist | grep -E "SupportedPlatform|SupportedArchitectures"
+
+      - name: Upload XCFramework
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZDLibffi.xcframework
+          path: XCFramework/ZDLibffi.xcframework
+          compression-level: 6

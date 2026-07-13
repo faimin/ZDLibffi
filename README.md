@@ -7,7 +7,7 @@
 
 ## Introduction
 
-`ZDLibffi` packages [libffi v3.7.0](https://github.com/libffi/libffi/releases/tag/v3.7.0) for Apple platforms and supports modular imports.
+`ZDLibffi` packages [libffi v3.7.1](https://github.com/libffi/libffi/releases/tag/v3.7.1) for Apple platforms and supports modular imports.
 
 ## Installation
 
@@ -25,7 +25,7 @@ Add the dependency in your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/faimin/ZDLibffi.git", from: "0.370.0")
+    .package(url: "https://github.com/faimin/ZDLibffi.git", from: "0.371.0")
 ]
 ```
 
@@ -66,7 +66,7 @@ swift build
 Use the built-in script to upgrade libffi source and regenerate the xcframework:
 
 ```bash
-./scripts/upgrade_libffi.sh --libffi-version 3.7.0 --pod-version 0.370.0
+./scripts/upgrade_libffi.sh --libffi-version 3.7.1 --pod-version 0.371.0
 ```
 
 What this script does:
@@ -80,13 +80,28 @@ Options:
 
 | Flag | Description |
 |------|-------------|
-| `--libffi-version` | Target libffi version (e.g. `3.7.0`) |
+| `--libffi-version` | Target libffi version (e.g. `3.7.1`) |
 | `--pod-version` | Pod version string (defaults to `0.<version_digits>.0`) |
 | `--skip-xcframework` | Skip the xcframework build step |
 
-## XCFramework Coverage
+## XCFramework
 
-Generated `XCFramework/ZDLibffi.xcframework` contains slices for:
+`ZDLibffi.xcframework` is no longer committed to the repository. You can build it locally or download it from CI.
+
+### Build Locally
+
+```bash
+python3 scripts/build_xcframework.py \
+  --source Source \
+  --output XCFramework/ZDLibffi.xcframework \
+  --build-dir build/xcframework
+```
+
+### Download from CI
+
+Go to **Actions → CI → Run workflow** and trigger a manual build. The xcframework will be available as a downloadable artifact.
+
+### Supported Slices
 
 - iOS (device)
 - iOS Simulator
