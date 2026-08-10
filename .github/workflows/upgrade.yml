@@ -17,17 +17,41 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Validate version format
+        env:
+          LIBFFI_VERSION: ${{ inputs.libffi_version }}
+        run: |
+          if [[ ! "${LIBFFI_VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Invalid version format: '${LIBFFI_VERSION}'. Expected: X.Y.Z"
+            exit 1
+          fi
 
       - name: Run upgrade script
+        env:
+          LIBFFI_VERSION: ${{ inputs.libffi_version }}
         run: |
           ./scripts/upgrade_libffi.sh \
-            --libffi-version ${{ inputs.libffi_version }} \
+            --libffi-version "${LIBFFI_VERSION}" \
             --skip-xcframework
 
-      - name: Update README URL
+      - name: Update README references
+        env:
+          LIBFFI_VERSION: ${{ inputs.libffi_version }}
         run: |
-          # Fix the release tag URL (upgrade script only replaces display text)
-          sed -i '' "s|releases/tag/v[0-9]*\.[0-9]*\.[0-9]*|releases/tag/v${{ inputs.libffi_version }}|g" README.md
+          POD_VERSION="0.${LIBFFI_VERSION//./}.0"
+          # Fix release tag URL
+          sed -i '' "s|releases/tag/v[0-9]*\.[0-9]*\.[0-9]*|releases/tag/v${LIBFFI_VERSION}|g" README.md
+          # Fix SPM version
+          sed -i '' "s|from: \"0\.[0-9]*\.0\"|from: \"${POD_VERSION}\"|g" README.md
+          # Fix upgrade example command
+          sed -i '' "s|--libffi-version [0-9]*\.[0-9]*\.[0-9]*|--libffi-version ${LIBFFI_VERSION}|g" README.md
+          sed -i '' "s|--pod-version 0\.[0-9]*\.0|--pod-version ${POD_VERSION}|g" README.md
+          # Fix version example in options table
+          sed -i '' "s|(e.g. \`[0-9]*\.[0-9]*\.[0-9]*\`)|(e.g. \`${LIBFFI_VERSION}\`)|g" README.md
 
       - name: Verify build
         run: swift build
@@ -35,8 +59,10 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "feat: upgrade libffi to ${{ inputs.libffi_version }}"
           branch: upgrade/libffi-${{ inputs.libffi_version }}
+          base: main
           title: "feat: upgrade libffi to ${{ inputs.libffi_version }}"
           body: |
             Automated upgrade of libffi to **${{ inputs.libffi_version }}**.
