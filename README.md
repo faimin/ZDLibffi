@@ -7,7 +7,7 @@
 
 ## Introduction
 
-`ZDLibffi` packages [libffi v3.7.1](https://github.com/libffi/libffi/releases/tag/v3.7.1) for Apple platforms and supports modular imports.
+`ZDLibffi` packages [libffi v3.8.0](https://github.com/libffi/libffi/releases/tag/v3.8.0) for Apple platforms and supports modular imports.
 
 ## Installation
 
@@ -25,7 +25,7 @@ Add the dependency in your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/faimin/ZDLibffi.git", from: "0.371.0")
+    .package(url: "https://github.com/faimin/ZDLibffi.git", from: "0.380.0")
 ]
 ```
 
@@ -66,7 +66,7 @@ swift build
 Use the built-in script to upgrade libffi source and regenerate the xcframework:
 
 ```bash
-./scripts/upgrade_libffi.sh --libffi-version 3.7.1 --pod-version 0.371.0
+./scripts/upgrade_libffi.sh --libffi-version 3.8.0 --pod-version 0.380.0
 ```
 
 What this script does:
@@ -80,13 +80,21 @@ Options:
 
 | Flag | Description |
 |------|-------------|
-| `--libffi-version` | Target libffi version (e.g. `3.7.1`) |
+| `--libffi-version` | Target libffi version (e.g. `3.8.0`) |
 | `--pod-version` | Pod version string (defaults to `0.<version_digits>.0`) |
 | `--skip-xcframework` | Skip the xcframework build step |
 
+### Upgrade via CI
+
+You can also upgrade without a local environment. Go to **Actions → Upgrade libffi → Run workflow**, enter the target version number (e.g. `3.8.0`), and a PR will be created automatically with:
+
+- Regenerated `Source/` from the new release
+- Updated version references in podspec and README
+- SPM build verification
+
 ## XCFramework
 
-`ZDLibffi.xcframework` is no longer committed to the repository. You can build it locally or download it from CI.
+`ZDLibffi.xcframework` is no longer committed to the repository. You can build it locally or download it from a release.
 
 ### Build Locally
 
@@ -97,9 +105,9 @@ python3 scripts/build_xcframework.py \
   --build-dir build/xcframework
 ```
 
-### Download from CI
+### Download from Release
 
-Go to **Actions → CI → Run workflow** and trigger a manual build. The xcframework will be available as a downloadable artifact.
+Pushing a tag triggers CI to build the xcframework for all platforms and publish it as a GitHub Release asset (`ZDLibffi.xcframework.zip`).
 
 ### Supported Slices
 
