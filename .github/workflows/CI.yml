@@ -19,7 +19,7 @@ jobs:
       matrix:
         platform: [ios, macos, watchos, tvos, visionos]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: |
           pod lib lint ZDLibffi.podspec --allow-warnings --platforms=${{ matrix.platform }} --skip-tests
           pod lib lint ZDLibffi.podspec --allow-warnings --platforms=${{ matrix.platform }} --use-modular-headers --skip-tests
@@ -28,7 +28,7 @@ jobs:
     name: SPM Build
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: swift build
 
   release:
@@ -39,7 +39,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -70,7 +70,7 @@ jobs:
           EOF
 
       - name: Create release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           body_path: CHANGELOG.md
           files: ZDLibffi.xcframework.zip
