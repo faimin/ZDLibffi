@@ -33,6 +33,7 @@
 #define LIBFFI_ASM	
 #include <fficonfig.h>
 #include <ffi.h>
+#include <ffi_cfi.h>
 #include "internal64.h"
 #include "asmnames.h"
 
@@ -258,7 +259,7 @@ ENDF(C(ffi_call_unix64))
 	.globl	C(ffi_plan_fast_call)
 	FFI_HIDDEN(C(ffi_plan_fast_call))
 C(ffi_plan_fast_call):
-	.cfi_startproc
+	cfi_startproc
 	_CET_ENDBR
 	movq	%rsi, %r11		/* fn */
 	movq	%rdi, %rax		/* img */
@@ -282,12 +283,12 @@ C(ffi_plan_fast_call):
 	movq	0x28(%rax), %r9
 	movl	%r10d, %eax		/* %al = ssecount */
 	subq	$8, %rsp		/* realign to 16 across the call */
-	.cfi_adjust_cfa_offset 8
+	cfi_adjust_cfa_offset(8)
 	call	*%r11
 	addq	$8, %rsp
-	.cfi_adjust_cfa_offset -8
+	cfi_adjust_cfa_offset(-8)
 	ret				/* rax + xmm0 carry the callee's return */
-	.cfi_endproc
+	cfi_endproc
 	ENDF(C(ffi_plan_fast_call))
 
 /* Count-based direct thunks for the pure-GP64 fast path: load avalue[0..N-1]
@@ -299,7 +300,7 @@ C(ffi_plan_fast_call):
    rax/xmm0 flow out as the {UINT64,double} return; C stores per return code.  */
 
 #define FFI_GP_HEAD				\
-	.cfi_startproc;				\
+	cfi_startproc;				\
 	_CET_ENDBR;				\
 	movq	%rsi, %r11;			\
 	movq	%rdi, %rax
@@ -309,12 +310,12 @@ C(ffi_plan_fast_call):
 #define FFI_GP_TAIL				\
 	xorl	%eax, %eax;			\
 	subq	$8, %rsp;			\
-	.cfi_adjust_cfa_offset 8;		\
+	cfi_adjust_cfa_offset(8);		\
 	call	*%r11;				\
 	addq	$8, %rsp;			\
-	.cfi_adjust_cfa_offset -8;		\
+	cfi_adjust_cfa_offset(-8);		\
 	ret;					\
-	.cfi_endproc
+	cfi_endproc
 
 	.balign	8
 	.globl	C(ffi_plan_gp0)

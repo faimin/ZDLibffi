@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       libffi_version:
-        description: 'libffi version to upgrade to (e.g. 3.8.0)'
+        description: 'libffi version to upgrade to (e.g. 3.8.1)'
         required: true
         type: string
 

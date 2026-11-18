@@ -731,5 +731,9 @@ CNAME(ffi_go_closure_SYSV):
 FEATURE_1_AND_MARK(AARCH64_BTI | AARCH64_POINTER_AUTH | AARCH64_GCS)
 #endif
 
+#ifdef __APPLE__
+	.subsections_via_symbols
+#endif
+
 
 #endif
